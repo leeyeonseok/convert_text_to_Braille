@@ -63,6 +63,7 @@ def convert(test_keyword):
 
 if __name__ == '__main__':
     print(1 + 2)
+    print(1 + 3)
     if len(sys.argv) > 1:
         inputfile = open(sys.argv[1], 'r')
         for line in inputfile.readlines():
