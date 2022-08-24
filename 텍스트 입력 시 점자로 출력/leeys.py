@@ -18,9 +18,12 @@ def separation_text(input_list):
             # 중성은 총 28가지 종류
             char2 = ((ord(word) - ord('가')) - (588 * char1)) // 28
             char3 = (ord(word) - ord('가')) - (588 * char1) - 28 * char2
-            separation_list.append([CHOSUNG[char1], JUNGSUNG[char2], JONGSUNG[char3]])
+            if char3 == 0:
+                separation_list.append([CHOSUNG[char1], JUNGSUNG[char2]])
+            else:
+                separation_list.append([CHOSUNG[char1], JUNGSUNG[char2], JONGSUNG[char3]])
         else:
-            separation_list.append(word)
+            separation_list.append([word])
     return separation_list
 
 
