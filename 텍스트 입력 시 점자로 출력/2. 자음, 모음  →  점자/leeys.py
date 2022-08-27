@@ -231,7 +231,7 @@ def convert_JUNGSUNG_to_Braille(jamo, index1):
     elif jamo[index1][1] == 'ㅒ':
         braille = [[0, 1, 0, 1, 1, 0], [1, 0, 1, 1, 1, 0]]
     elif jamo[index1][1] == 'ㅖ':
-        braille = [1, 0, 0, 0, 1, 0]
+        braille = [0, 1, 0, 0, 1, 0]
     elif jamo[index1][1] == 'ㅘ':
         braille = [1, 0, 1, 0, 1, 1]
     elif jamo[index1][1] == 'ㅙ':
