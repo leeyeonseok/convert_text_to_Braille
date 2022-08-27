@@ -68,22 +68,22 @@ def separation_text(input_list):        # 텍스트 각각의 자음, 모음으�
     return separation_list
 
 
-def check_abbreviation_1(jamo, i):    # 약어 검사 함수
+def check_abbreviation_1(jamo, index1):    # 약어 검사 함수
     abb_list = []
-    for j in range(len(abbreviation_1)):
-        if abbreviation_1[j][0:len(abbreviation_1[j])] == jamo[i:i + len(abbreviation_1[j])]:
-            if not j:
+    for i in range(len(abbreviation_1)):
+        if abbreviation_1[i][0:len(abbreviation_1[i])] == jamo[index1:index1 + len(abbreviation_1[i])]:
+            if not i:
                 abb_list = [[1, 0, 0, 0, 0, 0], [0, 1, 1, 0, 1, 0]]   # 그래서
-            elif j == 1:
+            elif i == 1:
                 abb_list = [[1, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0]]   # 그러나
-            elif j == 2:
+            elif i == 2:
                 abb_list = [[1, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]]   # 그러면
-            elif j == 3:
+            elif i == 3:
                 abb_list = [[1, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 1]]   # 그러므로
                 return 4, abb_list
-            elif j == 4:
+            elif i == 4:
                 abb_list = [[1, 0, 0, 0, 0, 0], [1, 1, 0, 1, 1, 0]]   # 그런데
-            elif j == 5:
+            elif i == 5:
                 abb_list = [[1, 0, 0, 0, 0, 0], [1, 0, 0, 0, 1, 1]]   # 그리고
             else:
                 abb_list = [[1, 0, 0, 0, 0, 0], [1, 0, 0, 1, 0, 1]]   # 그리하여
@@ -92,236 +92,306 @@ def check_abbreviation_1(jamo, i):    # 약어 검사 함수
     return 0, abb_list
 
 
-def check_abbreviation_2(jamo, i):      # 약자 검사 함수
+def check_abbreviation_2(jamo, index1):      # 약자 검사 함수
     abb_list = []
-    for j in range(len(abbreviation_2)):
-        for k in range(len(jamo[i])):
-            if abbreviation_2[j] == jamo[i][k:k + len(abbreviation_2[j])]:
-                if 11 <= j <= 24:
-                    if j == 11:
+    for i in range(len(abbreviation_2)):
+        for j in range(len(jamo[index1]) - (len(abbreviation_2[i]) - 1)):
+            if abbreviation_2[i] == jamo[index1][j:j + len(abbreviation_2[i])]:
+                if 11 <= i <= 24:
+                    if i == 11:
                         abb_list = [1, 1, 0, 1, 0, 1]  # ㅓㄱ
-                    elif j == 12:
+                    elif i == 12:
                         abb_list = [0, 1, 1, 1, 1, 1]  # ㅓㄴ
-                    elif j == 13:
+                    elif i == 13:
                         abb_list = [0, 1, 1, 1, 1, 0]  # ㅓㄹ
-                    elif j == 14:
+                    elif i == 14:
                         abb_list = [1, 0, 0, 0, 0, 1]  # ㅕㄴ
-                    elif j == 15:
+                    elif i == 15:
                         abb_list = [1, 0, 1, 1, 0, 1]  # ㅕㄹ
-                    elif j == 16:
+                    elif i == 16:
                         abb_list = [1, 1, 1, 1, 0, 1]  # ㅕㅇ
-                    elif j == 17:
+                    elif i == 17:
                         abb_list = [1, 1, 0, 0, 1, 1]  # ㅗㄱ
-                    elif j == 18:
+                    elif i == 18:
                         abb_list = [1, 0, 1, 1, 1, 1]  # ㅗㄴ
-                    elif j == 19:
+                    elif i == 19:
                         abb_list = [1, 1, 1, 1, 1, 1]  # ㅗㅇ
-                    elif j == 20:
+                    elif i == 20:
                         abb_list = [1, 1, 1, 1, 0, 0]  # ㅜㄴ
-                    elif j == 21:
+                    elif i == 21:
                         abb_list = [1, 1, 1, 0, 1, 1]  # ㅜㄹ
-                    elif j == 22:
+                    elif i == 22:
                         abb_list = [1, 0, 0, 1, 1, 1]  # ㅡㄴ
-                    elif j == 23:
+                    elif i == 23:
                         abb_list = [0, 1, 1, 0, 1, 1]  # ㅡㄹ
                     else:
                         abb_list = [1, 1, 1, 1, 1, 0]  # ㅣㄴ
                     return 1, abb_list
                 else:
-                    if not j:
+                    if not i:
                         abb_list = [1, 1, 1, 0, 0, 1]  # 가
-                    elif j == 1:
+                    elif i == 1:
                         abb_list = [1, 1, 0, 0, 0, 0]  # 나
-                    elif j == 2:
+                    elif i == 2:
                         abb_list = [0, 1, 1, 0, 0, 0]  # 다
-                    elif j == 3:
+                    elif i == 3:
                         abb_list = [1, 0, 0, 1, 0, 0]  # 마
-                    elif j == 4:
+                    elif i == 4:
                         abb_list = [0, 1, 0, 1, 0, 0]  # 바
-                    elif j == 5:
+                    elif i == 5:
                         abb_list = [1, 0, 1, 0, 1, 0]  # 사
-                    elif j == 6:
+                    elif i == 6:
                         abb_list = [0, 1, 0, 0, 0, 1]  # 자
-                    elif j == 7:
+                    elif i == 7:
                         abb_list = [1, 1, 1, 0, 0, 0]  # 카
-                    elif j == 8:
+                    elif i == 8:
                         abb_list = [1, 0, 1, 1, 0, 0]  # 타
-                    elif j == 9:
+                    elif i == 9:
                         abb_list = [1, 1, 0, 1, 0, 0]  # 파
-                    elif j == 10:
+                    elif i == 10:
                         abb_list = [0, 1, 1, 1, 0, 0]  # 하
                     else:
                         abb_list = [[0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 1, 0]]  # 것
+                        return 3, abb_list
                     return 2, abb_list
     return 0, abb_list
 
 
-def convert_CHOSUNG_to_Braille(jamo, i):
+def convert_CHOSUNG_to_Braille(jamo, index1):
     braille = []
-    if jamo[i][0] == 'ㄱ':
+    if jamo[index1][0] == 'ㄱ':
+        braille = [0, 1, 0, 0, 0, 0]
+    elif jamo[index1][0] == 'ㄴ':
+        braille = [1, 1, 0, 0, 0, 0]
+    elif jamo[index1][0] == 'ㄷ':
+        braille = [0, 1, 1, 0, 0, 0]
+    elif jamo[index1][0] == 'ㄹ':
         braille = [0, 0, 0, 1, 0, 0]
-    elif jamo[i][0] == 'ㄴ':
+    elif jamo[index1][0] == 'ㅁ':
         braille = [1, 0, 0, 1, 0, 0]
-    elif jamo[i][0] == 'ㄷ':
+    elif jamo[index1][0] == 'ㅂ':
         braille = [0, 1, 0, 1, 0, 0]
-    elif jamo[i][0] == 'ㄹ':
-        braille = [0, 0, 0, 0, 1, 0]
-    elif jamo[i][0] == 'ㅁ':
-        braille = [1, 0, 0, 0, 1, 0]
-    elif jamo[i][0] == 'ㅂ':
-        braille = [0, 0, 0, 1, 1, 0]
-    elif jamo[i][0] == 'ㅅ':
+    elif jamo[index1][0] == 'ㅅ':
         braille = [0, 0, 0, 0, 0, 1]
-    elif jamo[i][0] == 'ㅇ':
-        braille = [1, 1, 0, 1, 1, 0]
-    elif jamo[i][0] == 'ㅈ':
+    elif jamo[index1][0] == 'ㅇ':
+        braille = [1, 1, 1, 1, 0, 0]
+    elif jamo[index1][0] == 'ㅈ':
+        braille = [0, 1, 0, 0, 0, 1]
+    elif jamo[index1][0] == 'ㅊ':
         braille = [0, 0, 0, 1, 0, 1]
-    elif jamo[i][0] == 'ㅊ':
-        braille = [0, 0, 0, 0, 1, 1]
-    elif jamo[i][0] == 'ㅋ':
+    elif jamo[index1][0] == 'ㅋ':
+        braille = [1, 1, 1, 0, 0, 0]
+    elif jamo[index1][0] == 'ㅌ':
+        braille = [1, 0, 1, 1, 0, 0]
+    elif jamo[index1][0] == 'ㅍ':
         braille = [1, 1, 0, 1, 0, 0]
-    elif jamo[i][0] == 'ㅌ':
-        braille = [1, 1, 0, 0, 1, 0]
-    elif jamo[i][0] == 'ㅍ':
-        braille = [1, 0, 0, 1, 1, 0]
-    elif jamo[i][0] == 'ㅎ':
-        braille = [0, 1, 0, 1, 1, 0]
-    elif jamo[i][0] == 'ㄲ':
-        braille = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 1, 0, 0]]
-    elif jamo[i][0] == 'ㄸ':
+    elif jamo[index1][0] == 'ㅎ':
+        braille = [0, 1, 1, 1, 0, 0]
+    elif jamo[index1][0] == 'ㄲ':
+        braille = [[0, 0, 0, 0, 0, 1], [0, 1, 0, 0, 0, 0]]
+    elif jamo[index1][0] == 'ㄸ':
+        braille = [[0, 0, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0]]
+    elif jamo[index1][0] == 'ㅃ':
         braille = [[0, 0, 0, 0, 0, 1], [0, 1, 0, 1, 0, 0]]
-    elif jamo[i][0] == 'ㅃ':
-        braille = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 1, 1, 0]]
-    elif jamo[i][0] == 'ㅆ':
+    elif jamo[index1][0] == 'ㅆ':
         braille = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 1]]
-    elif jamo[i][0] == 'ㅉ':
-        braille = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 1, 0, 1]]
+    elif jamo[index1][0] == 'ㅉ':
+        braille = [[0, 0, 0, 0, 0, 1], [0, 1, 0, 0, 0, 1]]
     else:
         pass
     return braille
 
 
-def convert_JUNGSUNG_to_Braille(jamo, i):
-    MATCH_H2B_JOONG = {
-        u'ㅏ': [[1, 1, 0, 0, 0, 1]],
-        u'ㅑ': [[0, 0, 1, 1, 1, 0]],
-        u'ㅓ': [[0, 1, 1, 1, 0, 0]],
-        u'ㅕ': [[1, 0, 0, 0, 1, 1]],
-        u'ㅗ': [[1, 0, 1, 0, 0, 1]],
-        u'ㅛ': [[0, 0, 1, 1, 0, 1]],
-        u'ㅜ': [[1, 0, 1, 1, 0, 0]],
-        u'ㅠ': [[1, 0, 0, 1, 0, 1]],
-        u'ㅡ': [[0, 1, 0, 1, 0, 1]],
-        u'ㅣ': [[1, 0, 1, 0, 1, 0]],
-        u'ㅐ': [[1, 1, 1, 0, 1, 0]],
-        u'ㅔ': [[1, 0, 1, 1, 1, 0]],
-        u'ㅒ': [[0, 0, 1, 1, 1, 0], [1, 1, 1, 0, 1, 0]],
-        u'ㅖ': [[0, 0, 1, 1, 0, 0]],
-        u'ㅘ': [[1, 1, 1, 0, 0, 1]],
-        u'ㅙ': [[1, 1, 1, 0, 0, 1], [1, 1, 1, 0, 1, 0]],
-        u'ㅚ': [[1, 0, 1, 1, 1, 1]],
-        u'ㅝ': [[1, 1, 1, 1, 0, 0]],
-        u'ㅞ': [[1, 1, 1, 1, 0, 0], [1, 1, 1, 0, 1, 0]],
-        u'ㅟ': [[1, 0, 1, 1, 0, 0], [1, 1, 1, 0, 1, 0]],
-        u'ㅢ': [[0, 1, 0, 1, 1, 1]],
-    }
-
-    MATCH_H2B_JONG = {
-        u'ㄱ': [[1, 0, 0, 0, 0, 0]],
-        u'ㄴ': [[0, 1, 0, 0, 1, 0]],
-        u'ㄷ': [[0, 0, 1, 0, 1, 0]],
-        u'ㄹ': [[0, 1, 0, 0, 0, 0]],
-        u'ㅁ': [[0, 1, 0, 0, 0, 1]],
-        u'ㅂ': [[1, 1, 0, 0, 0, 0]],
-        u'ㅅ': [[0, 0, 1, 0, 0, 0]],
-        u'ㅇ': [[0, 1, 1, 0, 1, 1]],
-        u'ㅈ': [[1, 0, 1, 0, 0, 0]],
-        u'ㅊ': [[0, 1, 1, 0, 0, 0]],
-        u'ㅋ': [[0, 1, 1, 0, 1, 0]],
-        u'ㅌ': [[0, 1, 1, 0, 0, 1]],
-        u'ㅍ': [[0, 1, 0, 0, 1, 1]],
-        u'ㅎ': [[0, 0, 1, 0, 1, 1]],
-
-        u'ㄲ': [[1, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0]],
-        u'ㄳ': [[1, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0]],
-        u'ㄵ': [[0, 1, 0, 0, 1, 0], [1, 0, 1, 0, 0, 0]],
-        u'ㄶ': [[0, 1, 0, 0, 1, 0], [0, 0, 1, 0, 1, 1]],
-        u'ㄺ': [[0, 1, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0]],
-        u'ㄻ': [[0, 1, 0, 0, 0, 0], [0, 1, 0, 0, 0, 1]],
-        u'ㄼ': [[0, 1, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0]],
-        u'ㄽ': [[0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0]],
-        u'ㄾ': [[0, 1, 0, 0, 0, 0], [0, 1, 1, 0, 0, 1]],
-        u'ㄿ': [[0, 1, 0, 0, 0, 0], [0, 1, 0, 0, 1, 1]],
-        u'ㅀ': [[0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 1, 1]],
-        u'ㅄ': [[1, 1, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0]],
-        u'ㅆ': [[0, 0, 1, 1, 0, 0]],
-    }
-
-
-def convert_JONGSUNG_to_Braille(jamo, i):
+def convert_JUNGSUNG_to_Braille(jamo, index1):
     braille = []
-    if jamo[i][0] == 'ㄱ':
-        braille = [1, 0, 0, 0, 0, 0]
-    elif jamo[i][0] == 'ㄴ':
-        braille = [0, 1, 0, 0, 1, 0]
-    elif jamo[i][0] == 'ㄷ':
-        braille = [0, 1, 0, 1, 0, 0]
-    elif jamo[i][0] == 'ㄹ':
-        braille = [0, 0, 0, 0, 1, 0]
-    elif jamo[i][0] == 'ㅁ':
-        braille = [1, 0, 0, 0, 1, 0]
-    elif jamo[i][0] == 'ㅂ':
-        braille = [0, 0, 0, 1, 1, 0]
-    elif jamo[i][0] == 'ㅅ':
-        braille = [0, 0, 0, 0, 0, 1]
-    elif jamo[i][0] == 'ㅇ':
-        braille = [1, 1, 0, 1, 1, 0]
-    elif jamo[i][0] == 'ㅈ':
-        braille = [0, 0, 0, 1, 0, 1]
-    elif jamo[i][0] == 'ㅊ':
-        braille = [0, 0, 0, 0, 1, 1]
-    elif jamo[i][0] == 'ㅋ':
-        braille = [1, 1, 0, 1, 0, 0]
-    elif jamo[i][0] == 'ㅌ':
-        braille = [1, 1, 0, 0, 1, 0]
-    elif jamo[i][0] == 'ㅍ':
-        braille = [1, 0, 0, 1, 1, 0]
-    elif jamo[i][0] == 'ㅎ':
+    if jamo[index1][1] == 'ㅏ':
+        braille = [1, 0, 1, 0, 0, 1]
+    elif jamo[index1][1] == 'ㅑ':
         braille = [0, 1, 0, 1, 1, 0]
-    elif jamo[i][0] == 'ㄲ':
-        braille = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 1, 0, 0]]
-    elif jamo[i][0] == 'ㄸ':
-        braille = [[0, 0, 0, 0, 0, 1], [0, 1, 0, 1, 0, 0]]
-    elif jamo[i][0] == 'ㅃ':
-        braille = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 1, 1, 0]]
-    elif jamo[i][0] == 'ㅆ':
-        braille = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 1]]
-    elif jamo[i][0] == 'ㅉ':
-        braille = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 1, 0, 1]]
+    elif jamo[index1][1] == 'ㅓ':
+        braille = [0, 1, 1, 0, 1, 0]
+    elif jamo[index1][1] == 'ㅕ':
+        braille = [1, 0, 0, 1, 0, 1]
+    elif jamo[index1][1] == 'ㅗ':
+        braille = [1, 0, 0, 0, 1, 1]
+    elif jamo[index1][1] == 'ㅛ':
+        braille = [0, 1, 0, 0, 1, 1]
+    elif jamo[index1][1] == 'ㅜ':
+        braille = [1, 1, 0, 0, 1, 0]
+    elif jamo[index1][1] == 'ㅠ':
+        braille = [1, 1, 0, 0, 0, 1]
+    elif jamo[index1][1] == 'ㅡ':
+        braille = [0, 1, 1, 0, 0, 1]
+    elif jamo[index1][1] == 'ㅣ':
+        braille = [1, 0, 0, 1, 1, 0]
+    elif jamo[index1][1] == 'ㅐ':
+        braille = [1, 0, 1, 1, 1, 0]
+    elif jamo[index1][1] == 'ㅔ':
+        braille = [1, 1, 0, 1, 1, 0]
+    elif jamo[index1][1] == 'ㅒ':
+        braille = [[0, 1, 0, 1, 1, 0], [1, 0, 1, 1, 1, 0]]
+    elif jamo[index1][1] == 'ㅖ':
+        braille = [1, 0, 0, 0, 1, 0]
+    elif jamo[index1][1] == 'ㅘ':
+        braille = [1, 0, 1, 0, 1, 1]
+    elif jamo[index1][1] == 'ㅙ':
+        braille = [[1, 0, 1, 0, 1, 1], [1, 0, 1, 1, 1, 0]]
+    elif jamo[index1][1] == 'ㅚ':
+        braille = [1, 1, 0, 1, 1, 1]
+    elif jamo[index1][1] == 'ㅝ':
+        braille = [1, 1, 1, 0, 1, 0]
+    elif jamo[index1][1] == 'ㅞ':
+        braille = [[1, 1, 1, 0, 1, 0], [1, 0, 1, 1, 1, 0]]
+    elif jamo[index1][1] == 'ㅟ':
+        braille = [[1, 1, 0, 0, 1, 0], [1, 0, 1, 1, 1, 0]]
+    elif jamo[index1][1] == 'ㅢ':
+        braille = [0, 1, 1, 1, 0, 1]
     else:
         pass
     return braille
+
+
+def convert_JONGSUNG_to_Braille(jamo, index1, index2):
+    braille = []
+    if len(jamo[index1]) - index2 == 1:
+        if jamo[index1][-1] == 'ㄱ':
+            braille = [1, 0, 0, 0, 0, 0]
+        elif jamo[index1][-1] == 'ㄴ':
+            braille = [0, 0, 1, 1, 0, 0]
+        elif jamo[index1][-1] == 'ㄷ':
+            braille = [0, 0, 0, 1, 1, 0]
+        elif jamo[index1][-1] == 'ㄹ':
+            braille = [0, 0, 1, 0, 0, 0]
+        elif jamo[index1][-1] == 'ㅁ':
+            braille = [0, 0, 1, 0, 0, 1]
+        elif jamo[index1][-1] == 'ㅂ':
+            braille = [1, 0, 1, 0, 0, 0]
+        elif jamo[index1][-1] == 'ㅅ':
+            braille = [0, 0, 0, 0, 1, 0]
+        elif jamo[index1][-1] == 'ㅇ':
+            braille = [0, 0, 1, 1, 1, 1]
+        elif jamo[index1][-1] == 'ㅈ':
+            braille = [1, 0, 0, 0, 1, 0]
+        elif jamo[index1][-1] == 'ㅊ':
+            braille = [0, 0, 1, 0, 1, 0]
+        elif jamo[index1][-1] == 'ㅋ':
+            braille = [0, 0, 1, 1, 1, 0]
+        elif jamo[index1][-1] == 'ㅌ':
+            braille = [0, 0, 1, 0, 1, 1]
+        elif jamo[index1][-1] == 'ㅍ':
+            braille = [0, 0, 1, 1, 0, 1]
+        elif jamo[index1][-1] == 'ㅎ':
+            braille = [0, 0, 0, 1, 1, 1]
+        else:
+            pass
+    else:
+        if jamo[index1][-2:] == ['ㄱ', 'ㄱ']:
+            braille = [[1, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0]]
+        elif jamo[index1][-2:] == ['ㄱ', 'ㅅ']:
+            braille = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0]]
+        elif jamo[index1][-2:] == ['ㄴ', 'ㅈ']:
+            braille = [[0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0]]
+        elif jamo[index1][-2:] == ['ㄴ', 'ㅎ']:
+            braille = [[0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 1, 1]]
+        elif jamo[index1][-2:] == ['ㄹ', 'ㄱ']:
+            braille = [[0, 0, 1, 0, 0, 0], [1, 0, 0, 0, 0, 0]]
+        elif jamo[index1][-2:] == ['ㄹ', 'ㅁ']:
+            braille = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 1]]
+        elif jamo[index1][-2:] == ['ㄹ', 'ㅂ']:
+            braille = [[0, 0, 1, 0, 0, 0], [1, 0, 1, 0, 0, 0]]
+        elif jamo[index1][-2:] == ['ㄹ', 'ㅅ']:
+            braille = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 1, 0]]
+        elif jamo[index1][-2:] == ['ㄹ', 'ㅌ']:
+            braille = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 1, 1]]
+        elif jamo[index1][-2:] == ['ㄹ', 'ㅍ']:
+            braille = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1]]
+        elif jamo[index1][-2:] == ['ㄹ', 'ㅎ']:
+            braille = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 1]]
+        elif jamo[index1][-2:] == ['ㅂ', 'ㅅ']:
+            braille = [[1, 0, 1, 0, 0, 0], [0, 0, 0, 0, 1, 0]]
+        elif jamo[index1][-2:] == ['ㅅ', 'ㅅ']:
+            braille = [0, 1, 0, 0, 1, 0]
+        else:
+            pass
+    return braille
+
+
+def print_braille(braille_list):
+    if len(braille_list) == 6:
+        for i in range(6):
+            if braille_list[i]:
+                braille_list[i] = 'O'
+            else:
+                braille_list[i] = 'X'
+            print(braille_list[i], end=' ')
+            if i % 2:
+                print()
+        print()
+    else:
+        for i in range(2):
+            for j in range(6):
+                if braille_list[i][j]:
+                    braille_list[i][j] = 'O'
+                else:
+                    braille_list[i][j] = 'X'
+                print(braille_list[i][j], end=' ')
+                if j % 2:
+                    print()
+            print()
 
 def main():
-    i = 0
+    index1 = 0
     jamo = separation_text(input("텍스트 입력 : "))
     print(jamo)
-    while not i >= len(jamo):
-        if check_abbreviation_1(jamo, i)[0]:                                # 제 7절 약어 - 예외까지 구현 완료
-            if jamo[i - 1] == [' '] or not i:
-                print(*check_abbreviation_1(jamo, i)[1])
-                i += check_abbreviation_1(jamo, i)[0]
+    while index1 < len(jamo):
+        if jamo[index1] == [' ']:                                                  # 띄어쓰기 구현
+            word_spacing = [0, 0, 0, 0, 0, 0]
+            print_braille(word_spacing)
+            index1 += 1
+            continue
+
+        if check_abbreviation_1(jamo, index1)[0]:                                # 제 7절 약어 - 예외까지 구현 완료
+            if jamo[index1 - 1] == [' '] or not index1:
+                print_braille(check_abbreviation_1(jamo, index1)[1])
+                index1 += check_abbreviation_1(jamo, index1)[0]
                 continue
 
-        if check_abbreviation_2(jamo, i)[0]:
-            if jamo[i][0] == 'ㅇ':
-                print(check_abbreviation_2(jamo, i)[1])
-                if len(jamo[i]) == 4:
-                    print()
-            else:
-                print(convert_CHOSUNG_to_Braille(jamo, i))
-                print(check_abbreviation_2(jamo, i)[1])
-        i += 1
+        index2 = 0
+        if check_abbreviation_2(jamo, index1)[0] == 1:                           # 모음 두 개가 결합되어 있는 약어 판단
+            if jamo[index1][0] != 'ㅇ':                                    # [ ㅇ으로 시작되지 않을 때만
+                print_braille(convert_CHOSUNG_to_Braille(jamo, index1))            # 초성 출력 ]
+            index2 += 1
+            print_braille(check_abbreviation_2(jamo, index1)[1])
+            index2 += 2
+            if index2 >= len(jamo[index1]):
+                index1 += 1
+                continue
+            print_braille(convert_JONGSUNG_to_Braille(jamo, index1, index2))
+
+        elif check_abbreviation_2(jamo, index1)[0] == 2:                        # 가, 나, 다, 마.... 등의 약어 판단
+            print_braille(check_abbreviation_2(jamo, index1)[1])
+            index2 += 2
+            if index2 >= len(jamo[index1]):
+                index1 += 1
+                continue
+            print_braille(convert_JONGSUNG_to_Braille(jamo, index1, index2))
+
+        elif check_abbreviation_2(jamo, index1)[0] == 3:                        # '것' 약어 판단
+            print_braille(check_abbreviation_2(jamo, index1)[1])
+            index1 += 1
+            continue
+
+        else:
+            if jamo[index1][0] != 'ㅇ':
+                print_braille(convert_CHOSUNG_to_Braille(jamo, index1))
+            index2 += 1
+            print_braille(convert_JUNGSUNG_to_Braille(jamo, index1))
+            index2 += 1
+            if index2 >= len(jamo[index1]):
+                index1 += 1
+                continue
+            print_braille(convert_JONGSUNG_to_Braille(jamo, index1, index2))
+        index1 += 1
 
 
 if __name__ == '__main__':
