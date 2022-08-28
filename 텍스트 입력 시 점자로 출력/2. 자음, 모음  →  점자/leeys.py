@@ -317,81 +317,83 @@ def convert_JONGSUNG_to_Braille(jamo, index1, index2):
 
 
 def print_braille(braille_list):
-    if len(braille_list) == 6:
-        for i in range(6):
-            if braille_list[i]:
-                braille_list[i] = 'O'
+    for i in range(1, 6, 2):
+        for j in range(len(braille_list)):
+            if len(braille_list[j]) == 2:
+                for k in range(2):
+                    braille = ['O' for _ in range(2)]
+                    for m in range(i - 1, i + 1):
+                        if not braille_list[j][k][m]:
+                            braille[m % 2] = 'X'
+                    for m in braille:
+                        print(m, end=' ')
+                    print(end='  ')
             else:
-                braille_list[i] = 'X'
-            print(braille_list[i], end=' ')
-            if i % 2:
-                print()
+                braille = ['O' for _ in range(2)]
+                for k in range(i - 1, i + 1):
+                    if not braille_list[j][k]:
+                        braille[k % 2] = 'X'
+                for k in braille:
+                    print(k, end=' ')
+                print(end='  ')
         print()
-    else:
-        for i in range(2):
-            for j in range(6):
-                if braille_list[i][j]:
-                    braille_list[i][j] = 'O'
-                else:
-                    braille_list[i][j] = 'X'
-                print(braille_list[i][j], end=' ')
-                if j % 2:
-                    print()
-            print()
+
 
 def main():
+    braille_list = []
     index1 = 0
     jamo = separation_text(input("텍스트 입력 : "))
     print(jamo)
     while index1 < len(jamo):
         if jamo[index1] == [' ']:                                                  # 띄어쓰기 구현
             word_spacing = [0, 0, 0, 0, 0, 0]
-            print_braille(word_spacing)
+            braille_list.append(word_spacing)
             index1 += 1
             continue
 
         if check_abbreviation_1(jamo, index1)[0]:                                # 제 7절 약어 - 예외까지 구현 완료
             if jamo[index1 - 1] == [' '] or not index1:
-                print_braille(check_abbreviation_1(jamo, index1)[1])
+                braille_list.append(check_abbreviation_1(jamo, index1)[1])
                 index1 += check_abbreviation_1(jamo, index1)[0]
                 continue
 
         index2 = 0
         if check_abbreviation_2(jamo, index1)[0] == 1:                           # 모음 두 개가 결합되어 있는 약어 판단
             if jamo[index1][0] != 'ㅇ':                                    # [ ㅇ으로 시작되지 않을 때만
-                print_braille(convert_CHOSUNG_to_Braille(jamo, index1))            # 초성 출력 ]
+                braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))            # 초성 출력 ]
             index2 += 1
-            print_braille(check_abbreviation_2(jamo, index1)[1])
+            braille_list.append(check_abbreviation_2(jamo, index1)[1])
             index2 += 2
             if index2 >= len(jamo[index1]):
                 index1 += 1
                 continue
-            print_braille(convert_JONGSUNG_to_Braille(jamo, index1, index2))
+            braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
 
         elif check_abbreviation_2(jamo, index1)[0] == 2:                        # 가, 나, 다, 마.... 등의 약어 판단
-            print_braille(check_abbreviation_2(jamo, index1)[1])
+            braille_list.append(check_abbreviation_2(jamo, index1)[1])
             index2 += 2
             if index2 >= len(jamo[index1]):
                 index1 += 1
                 continue
-            print_braille(convert_JONGSUNG_to_Braille(jamo, index1, index2))
+            braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
 
         elif check_abbreviation_2(jamo, index1)[0] == 3:                        # '것' 약어 판단
-            print_braille(check_abbreviation_2(jamo, index1)[1])
+            braille_list.append(check_abbreviation_2(jamo, index1)[1])
             index1 += 1
             continue
 
         else:
             if jamo[index1][0] != 'ㅇ':
-                print_braille(convert_CHOSUNG_to_Braille(jamo, index1))
+                braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
             index2 += 1
-            print_braille(convert_JUNGSUNG_to_Braille(jamo, index1))
+            braille_list.append(convert_JUNGSUNG_to_Braille(jamo, index1))
             index2 += 1
             if index2 >= len(jamo[index1]):
                 index1 += 1
                 continue
-            print_braille(convert_JONGSUNG_to_Braille(jamo, index1, index2))
+            braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
         index1 += 1
+    print_braille(braille_list)
 
 
 if __name__ == '__main__':
