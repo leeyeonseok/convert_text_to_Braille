@@ -68,7 +68,7 @@ def separation_text(input_list):        # 텍스트 각각의 자음, 모음으�
     return separation_list
 
 
-def check_abbreviation_1(jamo, index1):    # 약어 검사 함수
+def check_abbreviation_1(jamo, index1):   # 약어 검사 함수
     abb_list = []
     for i in range(len(abbreviation_1)):
         if abbreviation_1[i][0:len(abbreviation_1[i])] == jamo[index1:index1 + len(abbreviation_1[i])]:
