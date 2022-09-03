@@ -7,9 +7,6 @@
 import keyboard
 import time
 
-
-
-
 def main():
 
         # content = input("조작할 내용을 입력하시오 : ")
@@ -50,18 +47,18 @@ def main():
 
                         if save_count == 1:
                                 save_init_index = now_index
-                                print('********')
+                                print('')
                                 print('저장 시작')
-                                print('********')
+                                print('')
                                 # 저장 리스트 초기화
                                 saved_list = []
 
                         elif save_count == 2:
                                 save_last_index = now_index
                                 saved_list = content_list[save_init_index: save_last_index+1]
-                                print('********')
+                                print('')
                                 print('저장 완료')
-                                print('********')
+                                print('')
                                 # 세이브카운트 초기화
                                 save_count = 0
 
@@ -104,22 +101,24 @@ def main():
                                 print('문장 처음으로 돌아갑니다')
                                 print('----------------------')
 
-                        # 현재 보고있는 문자를 출력
+                        # 현재 보고있는 문자를 출력2
                         print(content_list[now_index])
 
                         time.sleep(0.5)
 
-                # '7'을 눌렀을때 저장된 리스트 출력해주기.2222201
+                # '7'을 눌렀을때 저장된 리스트 출력해주기.
                 elif key == '7':
                         print(saved_list)
                         time.sleep(0.5)
 
                 # 예외처리 : 저장 시작되고 이전 문자로는 못가게 막음
                 else:
+                        print('')
                         print('저장이 시작되어 이전 문자로 돌아갈 수 없습니다. 재저장하려면 0을 2번 누르시오')
                         print('-> 현재 문자는', end='')
                         print(content_list[now_index], end='')
                         print('입니다.')
+                        print('')
                         time.sleep(0.5)
 
 if __name__ == '__main__':
