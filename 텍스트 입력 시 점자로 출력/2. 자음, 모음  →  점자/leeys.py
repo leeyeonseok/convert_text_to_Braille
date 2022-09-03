@@ -399,7 +399,7 @@ def print_braille(braille_list):
 def main():
     braille_list = []
     index1 = 0
-    jamo = separation_text(input("텍스트 입력 : "))
+    jamo = separation_text(input())
     print(jamo)
     while index1 < len(jamo):
         if jamo[index1] == [' ']:                                                  # 띄어쓰기 구현
