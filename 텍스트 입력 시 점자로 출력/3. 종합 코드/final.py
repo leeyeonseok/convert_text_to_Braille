@@ -403,7 +403,7 @@ def print_braille(braille_list):
 
 def main():
     text_list = NaverClova.main()
-    for text in text_list[3:9]:
+    for text in text_list:
         braille_list = []
         index1 = 0
         jamo = separation_text(text)
@@ -488,7 +488,7 @@ def main():
                     continue
                 braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
             index1 += 1
-        print(braille_list)
+        print(jamo)
         print_braille(braille_list)
 
 

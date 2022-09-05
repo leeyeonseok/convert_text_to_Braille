@@ -48,7 +48,7 @@ def plt_imshow(title='image', img=None, figsize=(8, 5)):     # Jupyter Notebook 
 # OpenCV의  putText 를 이용하여 한글을 출력하는 경우 한글이 깨지는 문제를 해결하기 위한 Function
 def put_text(image, text, x, y, color=(0, 255, 0), font_size=22):
     if type(image) == np.ndarray:   # image 매개변수의 타입이 numpy의 행렬 자료구조 클래스라면
-        color_coverted = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)    #image의 색깔 변환
+        color_coverted = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)    # image의 색깔 변환
         image = Image.fromarray(color_coverted)
 
     if platform.system() == 'Darwin':
@@ -69,22 +69,18 @@ def put_text(image, text, x, y, color=(0, 255, 0), font_size=22):
 # 도메인 생성 시 확인했던 APIGW Invoke URL 은 api_url 에 입력하고, Secret Key 는 secret_key  값에 입력합니다.
 
 def main():
-    api_url = 'https://f2h78xnnlh.apigw.ntruss.com/custom/v1/17592/244210e48437b6556980a70249a99369934a352429034cef9d7bd253b3bf2c01/general'
-    secret_key = 'cm5wR0pkSGdwd3V1RlJjbllnc1hjREFwYVpIbWxtQmg='
+    api_url = 'https://8i6sqyjy9s.apigw.ntruss.com/custom/v1/17582/38dde859a205f6942f2257111b29674d9058f1abd14e2aa96f114a066c57c89e/general'
+
+    secret_key = 'REV3WW9CenVYWUxMWlZYQ0lCa25DQnRPclJxSXF0V3o='
 
     # 이미지는 바이너리로 변환하여  load 합니다.
-    path = 'C:/users/kimjh/ocr_testPict/ocr_test.jpg'
-    files = [('file', open(path,'rb'))]
+    path = 'C:/users/leeys/OneDrive/바탕 화면/test_image_1.jpg'
+    files = [('file', open(path, 'rb'))]
 
     # REST API 호출 후 응답을 기다립니다.
 
-    request_json = {'images': [{'format': 'jpg',
-                                    'name': 'demo'
-                                   }],
-                        'requestId': str(uuid.uuid4()),
-                        'version': 'V2',
-                        'timestamp': int(round(time.time() * 1000))
-                       }
+    request_json = {'images': [{'format': 'jpg', 'name': 'demo'}], 'requestId': str(uuid.uuid4()), 'version': 'V2',
+                    'timestamp': int(round(time.time() * 1000))}
 
     payload = {'message': json.dumps(request_json).encode('UTF-8')}  # json.dumps로 파이썬 객체를 json으로 전환한 후 UTF-8(2진수)로 인코딩. 인코딩을 하지 않아도...
     # 정상 작동 함. json 형식으로 바꿔주는 건 필수인 것 같음.
@@ -96,16 +92,13 @@ def main():
     response = requests.request("POST", api_url, headers=headers, data=payload, files=files)
     result = response.json()
 
-
-
     # Check Result
     img = cv2.imread(path)
-    roi_img = img.copy()
+    # roi_img = img.copy()
     # 클로바 설명 링크 가보면 응답 JSON 을 볼 수 있당. 그 응답 중에서 image 아래, 리스트 중 첫번째 객체 딕셔너리 fields가 있음. 그 중 키워드 inferText에 변환 스트링이 담김.
     # 그 아래 것들은 변환 결과 사진 띄어 주는 코드.
-    text_list=[]
+    text_list = []
     for field in result['images'][0]['fields']:
-
         text = field['inferText']
         text_list.append(text)
 
@@ -123,7 +116,6 @@ def main():
         # roi_img = put_text(roi_img, text, topLeft[0], topLeft[1] - 10, font_size=30)
 
     return text_list
-
     # plt_imshow(["Original", "ROI"], [img, roi_img], figsize=(16, 10))
 
 
