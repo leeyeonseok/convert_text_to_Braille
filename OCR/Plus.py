@@ -1,3 +1,5 @@
+import NaverClova
+
 abbreviation_1 = [[['ㄱ', 'ㅡ'], ['ㄹ', 'ㅐ'], ['ㅅ', 'ㅓ']], [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅓ'], ['ㄴ', 'ㅏ']],
                  [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅓ'], ['ㅁ', 'ㅕ', 'ㄴ']], [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅓ'], ['ㅁ', 'ㅡ'], ['ㄹ', 'ㅗ']],
                  [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅓ', 'ㄴ'], ['ㄷ', 'ㅔ']], [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅣ'], ['ㄱ', 'ㅗ']],
@@ -54,18 +56,20 @@ def separate_double_consonant(char):        # 종성의 쌍자음을 각각의 �
     return JONGSUNG[char]
 
 
-def separation_text(input_list):        # 텍스트 각각의 자음, 모음으로 분리
+def separation_text(input_list):
     separation_list = []
-    for word in list(input_list.strip()):
+    for word in input_list:  # 양쪽 공백 지우기
+        # 영어인 경우 구분 해서 작성함.
         if '가' <= word <= '힣':
-            char1 = (ord(word) - ord('가')) // 588
+            # 588개 마다 초성이 바뀜.
+            char1 = (ord(word) - ord('가')) // 588  #몫을 반환,하나의 문자를 인자로 받고 해당 문자에 해당하는 유니코드 정수를 반환합니다.
+            # 중성은 총 28가지 종류
             char2 = ((ord(word) - ord('가')) - (588 * char1)) // 28
             char3 = (ord(word) - ord('가')) - (588 * char1) - 28 * char2
-            if not char3:
+            if not char3:  #char3값이 FAlSE면 실행.
                 separation_list.append([CHOSUNG[char1], JUNGSUNG[char2]])
             else:
-                JONGSUNG[char3] = separate_double_consonant(char3)      # 종성의 쌍자음을 각각의 자음으로 분리
-                separation_list.append([CHOSUNG[char1], JUNGSUNG[char2], *JONGSUNG[char3]])
+                separation_list.append([CHOSUNG[char1], JUNGSUNG[char2], JONGSUNG[char3]])
         else:
             separation_list.append([word])
     return separation_list
@@ -73,7 +77,7 @@ def separation_text(input_list):        # 텍스트 각각의 자음, 모음으�
 
 def check_abbreviation_1(jamo, index1):   # 약어 검사 함수
     abb_list = []
-    for i in range(len(abbreviation_1)):
+    for i in range(len(abbreviation_1)):  #예외1의 리스트 길이만큼의 range 객체 (0~7) 생성
         if abbreviation_1[i][0:len(abbreviation_1[i])] == jamo[index1:index1 + len(abbreviation_1[i])]:
             if not i:
                 abb_list = [[1, 0, 0, 0, 0, 0], [0, 1, 1, 0, 1, 0]]   # 그래서
@@ -212,7 +216,7 @@ def check_vowel_chain_2(jamo, index1):
             vowel_chain_list = convert_JUNGSUNG_to_Braille(jamo, index1)
             return vowel_chain_list
     return 0
-
+#-------------------------------------위는 예외 처리---------------------------------------------------
 
 def convert_CHOSUNG_to_Braille(jamo, index1):
     braille = []
@@ -397,99 +401,109 @@ def print_braille(braille_list):
 
 
 def main():
-    braille_list = []
-    index1 = 0
-    jamo = separation_text(input())
-    print(jamo)
-    while index1 < len(jamo):
-        if jamo[index1] == [' ']:                                                  # 띄어쓰기 구현
-            word_spacing = [0, 0, 0, 0, 0, 0]
-            braille_list.append(word_spacing)
-            index1 += 1
-            continue
 
-        if check_abbreviation_1(jamo, index1)[0]:                                # 제 7절 약어 - 예외까지 구현 완료
-            if jamo[index1 - 1] == [' '] or not index1:
-                braille_list.append(check_abbreviation_1(jamo, index1)[1])
-                index1 += check_abbreviation_1(jamo, index1)[0]
-                continue
+    text_list=NaverClova.main()
 
-        index2 = 0
-        if check_abbreviation_2(jamo, index1)[0] == 1:                           # 모음, 자음이 결합되어 있는 약어 판단
-            if jamo[index1][0] != 'ㅇ':                                    # [ ㅇ으로 시작되지 않을 때만
-                braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))            # 초성 출력 ]
-            index2 += 1
-            braille_list.append(check_abbreviation_2(jamo, index1)[1])
-            index2 += 2
-            if index2 >= len(jamo[index1]):
-                index1 += 1
-                continue
-            braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
+    text_list=text_list[3:9]
+    for text in text_list:
+        braille_list = []
+        index1 = 0
+        jamo = separation_text(text)
+        print(jamo)
+        while index1 < len(jamo):
+                    if jamo[index1] == [' ']:                                                  # 띄어쓰기 구현
+                        word_spacing = [0, 0, 0, 0, 0, 0]
+                        braille_list.append(word_spacing)
+                        index1 += 1
+                        continue
 
-        elif check_abbreviation_2(jamo, index1)[0] == 2:                        # 가, 나, 다, 마.... 등의 약어 판단
-            braille_list.append(check_abbreviation_2(jamo, index1)[1])
-            index2 += 2
-            if index2 >= len(jamo[index1]):
-                index1 += 1
-                continue
-            braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
+                    if check_abbreviation_1(jamo, index1)[0]:                                # 제 7절 약어 - 예외까지 구현 완료
+                        if jamo[index1 - 1] == [' '] or not index1:
+                            braille_list.append(check_abbreviation_1(jamo, index1)[1])
+                            index1 += check_abbreviation_1(jamo, index1)[0]
+                            continue
 
-        elif check_abbreviation_2(jamo, index1)[0] == 3:                        # '것' 약어 판단
-            braille_list.append(check_abbreviation_2(jamo, index1)[1])
-            index1 += 1
-            continue
+                    index2 = 0
+                    if check_abbreviation_2(jamo, index1)[0] == 1:                           # 모음, 자음이 결합되어 있는 약어 판단
+                        if jamo[index1][0] != 'ㅇ':                                    # [ ㅇ으로 시작되지 않을 때만
+                            braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))            # 초성 출력 ]
+                        index2 += 1
+                        braille_list.append(check_abbreviation_2(jamo, index1)[1])
+                        index2 += 2
+                        if index2 >= len(jamo[index1]):
+                            index1 += 1
+                            continue
+                        braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
 
-        elif check_abbreviation_2(jamo, index1)[0] == 4:                        # '껏' 약어 판단
-            index2 += 2
-            if len(jamo[index1]) - index2 == 1:
-                braille_list.append([0, 0, 0, 0, 0, 1])
-                braille_list.append(check_abbreviation_2(jamo, index1)[1])
-                index1 += 1
-                continue
-            else:                                                               # '껐' 판단
-                braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
-                braille_list.append(convert_JUNGSUNG_to_Braille(jamo, index1))
-                braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
-                index1 += 1
-                continue
+                    elif check_abbreviation_2(jamo, index1)[0] == 2:                        # 가, 나, 다, 마.... 등의 약어 판단
+                        braille_list.append(check_abbreviation_2(jamo, index1)[1])
+                        index2 += 2
+                        if index2 >= len(jamo[index1]):
+                            index1 += 1
+                            continue
+                        braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
 
-        elif check_abbreviation_3(jamo, index1):                                # 성, 썽, 정, 쩡, 청 예외 판단
-            braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
-            braille_list.append([1, 1, 1, 1, 0, 1])     # 'ㅕㅇ'
-            index1 += 1
-            continue
+                    elif check_abbreviation_2(jamo, index1)[0] == 3:                        # '것' 약어 판단
+                        braille_list.append(check_abbreviation_2(jamo, index1)[1])
+                        index1 += 1
+                        continue
 
-        elif check_vowel_chain_1(jamo, index1):                                 # 모음 + '예' 연쇄 판단
-            if jamo[index1][0] != 'ㅇ':
-                braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
-            braille_list.append(check_vowel_chain_1(jamo, index1))
-            braille_list.append([0, 0, 0, 0, 1, 1])     # 붙임표
-            braille_list.append([0, 1, 0, 0, 1, 0])     # '예'
-            index1 += 2
-            continue
+                    elif check_abbreviation_2(jamo, index1)[0] == 4:                        # '껏' 약어 판단
+                        index2 += 2
+                        if len(jamo[index1]) - index2 == 1:
+                            braille_list.append([0, 0, 0, 0, 0, 1])
+                            braille_list.append(check_abbreviation_2(jamo, index1)[1])
+                            index1 += 1
+                            continue
+                        else:                                                               # '껐' 판단
+                            braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
+                            braille_list.append(convert_JUNGSUNG_to_Braille(jamo, index1))
+                            braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
+                            index1 += 1
+                            continue
 
-        elif check_vowel_chain_2(jamo, index1):                                 # ㅑ, ㅘ, ㅜ, ㅝ + '애' 연쇄 판단
-            if jamo[index1][0] != 'ㅇ':
-                braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
-            braille_list.append(check_vowel_chain_2(jamo, index1))
-            braille_list.append([0, 0, 0, 0, 1, 1])     # 붙임표
-            braille_list.append([1, 0, 1, 1, 1, 0])     # '애'
-            index1 += 2
-            continue
+                    elif check_abbreviation_3(jamo, index1):                                # 성, 썽, 정, 쩡, 청 예외 판단
+                        braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
+                        braille_list.append([1, 1, 1, 1, 0, 1])     # 'ㅕㅇ'
+                        index1 += 1
+                        continue
 
-        else:
-            if jamo[index1][0] != 'ㅇ':
-                braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
-            index2 += 1
-            braille_list.append(convert_JUNGSUNG_to_Braille(jamo, index1))
-            index2 += 1
-            if index2 >= len(jamo[index1]):
-                index1 += 1
-                continue
-            braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
-        index1 += 1
-    print(braille_list)
-    print_braille(braille_list)
+                    elif check_vowel_chain_1(jamo, index1):                                 # 모음 + '예' 연쇄 판단
+                        if jamo[index1][0] != 'ㅇ':
+                            braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
+                        braille_list.append(check_vowel_chain_1(jamo, index1))
+                        braille_list.append([0, 0, 0, 0, 1, 1])     # 붙임표
+                        braille_list.append([0, 1, 0, 0, 1, 0])     # '예'
+                        index1 += 2
+                        continue
+
+                    elif check_vowel_chain_2(jamo, index1):                                 # ㅑ, ㅘ, ㅜ, ㅝ + '애' 연쇄 판단
+                        if jamo[index1][0] != 'ㅇ':
+                            braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
+                        braille_list.append(check_vowel_chain_2(jamo, index1))
+                        braille_list.append([0, 0, 0, 0, 1, 1])     # 붙임표
+                        braille_list.append([1, 0, 1, 1, 1, 0])     # '애'
+                        index1 += 2
+                        continue
+
+                    else:
+                        if jamo[index1][0] != 'ㅇ':
+                            braille_list.append(convert_CHOSUNG_to_Braille(jamo, index1))
+                        index2 += 1
+                        braille_list.append(convert_JUNGSUNG_to_Braille(jamo, index1))
+                        index2 += 1
+                        if index2 >= len(jamo[index1]):
+                            index1 += 1
+                            continue
+                        braille_list.append(convert_JONGSUNG_to_Braille(jamo, index1, index2))
+
+                    index1 += 1
+        print(braille_list)
+        print_braille(braille_list)
+
+
+
+
 
 
 if __name__ == '__main__':
