@@ -1,8 +1,10 @@
+
 #숫자 및 연산
 NUMBER=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '+', '-', '*', '%', '=']
 #수표
 NUM_CHECK=[0, 1, 0, 1, 1, 1]
-#NUM_L[][6]=[[0, 1, 1, 1, 0, 0],[0, 1, 0, 1, 1, 1],[1, 0, 1, 0, 0, 0]]
+#0~9
+#NUML=[[0, 1, 1, 1, 0, 0],[0, 1, 0, 1, 1, 1],[1, 0, 1, 0, 0, 0]. [1, 1, 0, 0, 0, 0]]
 
 def seperate_n(input_num):  #숫자
     n_list=[]
@@ -12,17 +14,26 @@ def seperate_n(input_num):  #숫자
 
 def NumtoBraille(input_n,index1): #숫자 to 점자로(수표+숫자)
     braille = []
-    if input_n[index1][0] == '0':   #누적..? 조건문 뭔가 이상
+    if input_n[index1][0] == '0':
         if input_n[0][0] == '0':
             braille = [NUM_CHECK, [0, 1, 1, 1, 0, 0]]
         else:
             braille = [0, 1, 1, 1, 0, 0]
     elif input_n[index1][0] == '1':
-        braille = [NUM_CHECK, [0, 1, 0, 1, 1, 1]]
+        if input_n[0][0] == '1':  #문제: 1[0][0]이 1이면 뒤에 나오는 1도 위에 규칙에 따라서 나옴
+            braille = [NUM_CHECK, [0, 1, 0, 1, 1, 1]]
+        else:
+            braille = [0, 1, 0, 1, 1, 1]
     elif input_n[index1][0] == '2':
-        braille = [NUM_CHECK, [1, 0, 1, 0, 0, 0]]
+        if input_n[0][0] == '2':
+            braille = [NUM_CHECK, [1, 0, 1, 0, 0, 0]]
+        else:
+            braille = [1, 0, 1, 0, 0, 0]
     elif input_n[index1][0] == '3':
-        braille = [NUM_CHECK, [1, 1, 0, 0, 0, 0]]
+        if input_n[0][0] == '3':
+            braille = [NUM_CHECK, [1, 1, 0, 0, 0, 0]]
+        else:
+            braille = [1, 1, 0, 0, 0, 0]
     elif input_n[index1][0]== '4':
         braille = [NUM_CHECK, [1, 1, 0, 1, 0, 0]]
     elif input_n[index1][0] == '5':
@@ -101,13 +112,16 @@ def main():
         braille_list.append(NumtoBraille(numb, index1))
         # braille_list.append(PunctoBraille(numb, index1))
         # braille_list.append(CalctoBraille(numb,index1))
-        index1+=1
+        if numb[index1][0] == 'ㄴ' or 'ㄷ' or 'ㅁ' or 'ㅋ' or 'ㅌ' or 'ㅍ' or 'ㅎ':
+            braille_list.append([0, 0, 0, 0, 0, 0])
+            index1 += 1
+
 
     print(braille_list)
     print_braille(braille_list)
 
     #숫자는 수표를 앞세워
-    #첫글자 앞에만 수표 나옴-> 이거 해결해야함
+    #첫글자 앞에만 수표 나옴
 
     #숫자 다음에 한글-> 숫자 한글 붙여쓴다 + 여러 조건
     #숫자와 혼동되는 ㄴㄷㅁㅁㅋㅌㅍㅎ 의 첫 소리 글자와 '운'의 약자가 숫자 다음에 이어나올 때에는 숫자와 한글을 띄어쓴다
