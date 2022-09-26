@@ -6,12 +6,37 @@
 
 import keyboard
 import time
-
+qqqqqwe
 def main():
+        def determine_list():
+                print("저장공간을 지정하세요")
+
+                li = 0
+                big_list = ['1_List', '2_List', '3_List']
+                print(big_list[li])
+
+                stopper = 1
+
+                while stopper:
+                        if keyboard.read_key() == "q":
+                                li += 1
+                                if li > 2:
+                                        li -= 3
+                                print(big_list[li])
+                                time.sleep(0.5)
+                        elif keyboard.read_key() == "e":
+                                stopper = 0
+                                time.sleep(0.5)
+                print(big_list[li])
+                print('에 저장을 시작합니다.')
+                print('')
+
+
+        determine_list()
 
         # content = input("조작할 내용을 입력하시오 : ")
         content_list = [['한'], ['글'], ['문'], ['제'], ['출'], ['력'], ['테'], ['스'], ['트']]
-
+        
         # 사용 설명서
         print('복습기능을 시작합니다.')
         print('###########################')
@@ -22,7 +47,7 @@ def main():
         print('[7] = 저장 내용 출력')
         print('###########################')
         print('')
-        # 현재 인덱스222222222202222222207
+        # 현재 인덱스
         now_index = 0
 
         # 처음 시작 시 첫 문자를 출력
@@ -38,7 +63,7 @@ def main():
         saved_list = []
 
         while True:
-                #키를 눌렀을때, 앞으로 가거나 뒤로가라
+                # 키를 눌렀을때, 앞으로 가거나 뒤로가라
                 key = keyboard.read_key()
 
                 # '0'을 눌렀을때 저장 시작 / 다시 한번 누를 시 저장 끝. 및 save_count 초기화
@@ -56,6 +81,7 @@ def main():
                         elif save_count == 2:
                                 save_last_index = now_index
                                 saved_list = content_list[save_init_index: save_last_index+1]
+                                print(save_init_index)
                                 print('')
                                 print('저장 완료')
                                 print('')
