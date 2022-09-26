@@ -6,7 +6,7 @@
 
 import keyboard
 import time
-qqqqqwe
+
 def main():
         def determine_list():
                 print("저장공간을 지정하세요")
