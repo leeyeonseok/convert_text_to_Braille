@@ -8,31 +8,27 @@ import keyboard
 import time
 
 def main():
-        def determine_list():
-                print("저장공간을 지정하세요")
+        print("저장공간을 지정하세요")
 
-                li = 0
-                big_list = ['1_List', '2_List', '3_List']
-                print(big_list[li])
+        li = 0
+        big_list = ['1_List', '2_List', '3_List']
+        print(big_list[li])
 
-                stopper = 1
+        stopper = 1
 
-                while stopper:
-                        if keyboard.read_key() == "q":
-                                li += 1
-                                if li > 2:
-                                        li -= 3
-                                print(big_list[li])
-                                time.sleep(0.5)
-                        elif keyboard.read_key() == "e":
-                                stopper = 0
-                                time.sleep(0.5)
-                print(big_list[li])
-                print('에 저장을 시작합니다.')
-                print('')
-
-
-        determine_list()
+        while stopper:
+                if keyboard.read_key() == "q":
+                        li += 1
+                        if li > 2:
+                                li -= 3
+                        print(big_list[li])
+                        time.sleep(0.5)
+                elif keyboard.read_key() == "e":
+                        stopper = 0
+                        time.sleep(0.5)
+        print(big_list[li], end=' ')
+        print('에 저장을 시작합니다.')
+        print('')
 
         # content = input("조작할 내용을 입력하시오 : ")
         content_list = [['한'], ['글'], ['문'], ['제'], ['출'], ['력'], ['테'], ['스'], ['트']]
@@ -81,7 +77,6 @@ def main():
                         elif save_count == 2:
                                 save_last_index = now_index
                                 saved_list = content_list[save_init_index: save_last_index+1]
-                                print(save_init_index)
                                 print('')
                                 print('저장 완료')
                                 print('')
@@ -135,6 +130,12 @@ def main():
                 # '7'을 눌렀을때 저장된 리스트 출력해주기.
                 elif key == '7':
                         print(saved_list)
+                        time.sleep(0.5)
+
+                # 큰 리스트에 저장을 끝내고 싶다.
+                elif key == 'r':
+                        print(big_list[li], end=' ')
+                        print('에 저장을 완료했습니다.')
                         time.sleep(0.5)
 
                 # 예외처리 : 저장 시작되고 이전 문자로는 못가게 막음
