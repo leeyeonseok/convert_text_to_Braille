@@ -6,6 +6,8 @@
 
 import keyboard
 import time
+import NaverClova
+
 
 def main():
         """""
@@ -54,7 +56,8 @@ def main():
         ]
 
         # content = input("조작할 내용을 입력하시오 : ")
-        content_list = [['한'], ['글'], ['문'], ['제'], ['출'], ['력'], ['테'], ['스'], ['트']]
+        #content_list = [['한'], ['글'], ['문'], ['제'], ['출'], ['력'], ['테'], ['스'], ['트']]
+        content_list=list(NaverClova.main())[1]
         
         # 사용 설명서
         print('복습기능을 시작합니다.')
