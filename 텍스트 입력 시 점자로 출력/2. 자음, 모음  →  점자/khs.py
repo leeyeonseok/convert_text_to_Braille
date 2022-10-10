@@ -1,24 +1,10 @@
-abbreviation_1 = [[['ㄱ', 'ㅡ'], ['ㄹ', 'ㅐ'], ['ㅅ', 'ㅓ']], [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅓ'], ['ㄴ', 'ㅏ']],
-                 [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅓ'], ['ㅁ', 'ㅕ', 'ㄴ']], [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅓ'], ['ㅁ', 'ㅡ'], ['ㄹ', 'ㅗ']],
-                 [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅓ', 'ㄴ'], ['ㄷ', 'ㅔ']], [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅣ'], ['ㄱ', 'ㅗ']],
-                 [['ㄱ', 'ㅡ'], ['ㄹ', 'ㅣ'], ['ㅎ', 'ㅏ'], ['ㅇ', 'ㅕ']]]
-                # 그래서, 그러나, 그러면, 그러므로, 그런데, 그리고, 그리하여
-abbreviation_2 = [['ㄱ', 'ㅏ'], ['ㄴ', 'ㅏ'], ['ㄷ', 'ㅏ'], ['ㅁ', 'ㅏ'], ['ㅂ', 'ㅏ'], ['ㅅ', 'ㅏ'], ['ㅈ', 'ㅏ'],
-                  ['ㅋ', 'ㅏ'], ['ㅌ', 'ㅏ'], ['ㅍ', 'ㅏ'], ['ㅎ', 'ㅏ'], ['ㅓ', 'ㄱ'], ['ㅓ', 'ㄴ'], ['ㅓ', 'ㄹ'],
-                  ['ㅕ', 'ㄴ'], ['ㅕ', 'ㄹ'], ['ㅕ', 'ㅇ'], ['ㅗ', 'ㄱ'], ['ㅗ', 'ㄴ'], ['ㅗ', 'ㅇ'], ['ㅜ', 'ㄴ'],
-                  ['ㅜ', 'ㄹ'], ['ㅡ', 'ㄴ'], ['ㅡ', 'ㄹ'], ['ㅣ', 'ㄴ'], ['ㄱ', 'ㅓ', 'ㅅ']]
-                # 가, 나, 다, 마, 바, 사, 자, 카, 타, 파, 하,
-                # ㅓㄱ, ㅓㄴ, ㅓㄹ, ㅕㄴ, ㅕㄹ, ㅕㅇ, ㅗㄱ, ㅗㄴ, ㅗㅇ, ㅜㄴ, ㅜㄹ, ㅡㄴ, ㅡㄹ, ㅣㄴ, 것
-# 초성 리스트. 00 ~ 18
-CHOSUNG = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
-# 중성 리스트. 00 ~ 20
-JUNGSUNG = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ',
-                 'ㅣ']
-# 종성 리스트. 00 ~ 27 + 1(1개 없음)
-JONGSUNG = [' ', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ',
-                 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
+
 #숫자 및 연산
 NUMBER=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '+', '-', '*', '%', '=']
+#수표
+NUM_CHECK=[0, 1, 0, 1, 1, 1]
+#0~9
+#NUML=[[0, 1, 1, 1, 0, 0],[0, 1, 0, 1, 1, 1],[1, 0, 1, 0, 0, 0]. [1, 1, 0, 0, 0, 0]]
 
 def seperate_n(input_num):  #숫자
     n_list=[]
@@ -26,64 +12,118 @@ def seperate_n(input_num):  #숫자
         n_list.append([w])
     return n_list
 
-def number_to_braille(jamo, index1):  #숫자를 점자로(수표+숫자)
+def NumtoBraille(input_n,index1): #숫자 to 점자로(수표+숫자)
     braille = []
-    if jamo[index1][0] == '0':
-        braille = [[0, 1, 0, 1, 1, 1], [0, 1, 1, 1, 0, 0]]
-    elif jamo[index1][0] == '1':
-        braille = [[0, 1, 0, 1, 1, 1], [0, 1, 0, 1, 1, 1]]
-    elif jamo[index1][0] == '2':
-        braille = [[0, 1, 0, 1, 1, 1], [1, 0, 1, 0, 0, 0]]
-    elif jamo[index1][0] == '3':
-        braille = [[0, 1, 0, 1, 1, 1], [1, 1, 0, 0, 0, 0]]
-    elif jamo[index1][0] == '4':
-        braille = [[0, 1, 0, 1, 1, 1], [1, 1, 0, 1, 0, 0]]
-    elif jamo[index1][0] == '5':
-        braille = [[0, 1, 0, 1, 1, 1], [1, 0, 0, 1, 0, 0]]
-    elif jamo[index1][0] == '6':
-        braille = [[0, 1, 0, 1, 1, 1], [0, 0, 1, 0, 0, 0]]
-    elif jamo[index1][0] == '7':
-        braille = [[0, 1, 0, 1, 1, 1], [0, 0, 1, 0, 0, 1]]
-    elif jamo[index1][0] == '8':
-        braille = [[0, 1, 0, 1, 1, 1], [0, 0, 0, 1, 1, 0]]
-    elif jamo[index1][0] == '9':
-        braille = [[0, 1, 0, 1, 1, 1], [1, 0, 0, 0, 0, 1]]
+    if input_n[index1][0] == '0':
+        if input_n[0][0] == '0':
+            braille = [NUM_CHECK, [0, 1, 1, 1, 0, 0]]
+        else:
+            braille = [0, 1, 1, 1, 0, 0]
+    elif input_n[index1][0] == '1':
+        if input_n[0][0] == '1':  #문제: 1[0][0]이 1이면 뒤에 나오는 1도 위에 규칙에 따라서 나옴
+            braille = [NUM_CHECK, [0, 1, 0, 1, 1, 1]]
+        else:
+            braille = [0, 1, 0, 1, 1, 1]
+    elif input_n[index1][0] == '2':
+        if input_n[0][0] == '2':
+            braille = [NUM_CHECK, [1, 0, 1, 0, 0, 0]]
+        else:
+            braille = [1, 0, 1, 0, 0, 0]
+    elif input_n[index1][0] == '3':
+        if input_n[0][0] == '3':
+            braille = [NUM_CHECK, [1, 1, 0, 0, 0, 0]]
+        else:
+            braille = [1, 1, 0, 0, 0, 0]
+    elif input_n[index1][0]== '4':
+        braille = [NUM_CHECK, [1, 1, 0, 1, 0, 0]]
+    elif input_n[index1][0] == '5':
+        braille = [NUM_CHECK, [1, 0, 0, 1, 0, 0]]
+    elif input_n[index1][0]== '6':
+        braille = [NUM_CHECK, [0, 0, 1, 0, 0, 0]]
+    elif input_n[index1][0]== '7':
+        braille = [NUM_CHECK, [0, 0, 1, 0, 0, 1]]
+    elif input_n[index1][0]== '8':
+        braille = [NUM_CHECK, [0, 0, 0, 1, 1, 0]]
+    elif input_n[index1][0]== '9':
+        braille = [NUM_CHECK, [1, 0, 0, 0, 0, 1]]
+    else:
+        pass
+    #print(braille)
+    return braille
+
+def PunctoBraille(input_n,index1): #문장부호 to 점자
+    braille = []
+    if input_n[index1][0] == '.':
+        braille = [0, 0, 1, 1, 0, 1]
+    elif input_n[index1][0] == '?':
+        braille = [0, 0, 1, 0, 1, 1]
+    elif input_n[index1][0] == '!':
+        braille = [0, 0, 1, 1, 1, 0]
+    elif input_n[index1][0] == ',':  #수의 자리점 표시하는 쉼표는 [0, 0, 1, 0, 0, 0] 나중에 따로
+        braille = [0, 0, 0, 1, 0, 0]
     else:
         pass
     return braille
 
-def print_braille(braille_list):
+def CalctoBraille(input_n,index1): #사칙연산 to 점자
+    braille = []
+    if input_n[index1][0] == '+':
+        braille = [0, 0, 1, 0, 0, 1]
+    elif input_n[index1][0] == '-':
+        braille = [0, 0, 0, 1, 1, 0]
+    elif input_n[index1][0] == 'x' or 'X':
+        braille = [1, 0, 0, 0, 0, 1]
+    elif input_n[index1][0] == '%':
+        braille = [[0, 1, 0, 0, 1, 0], [0, 1, 0, 0, 1, 0]]
+    else:
+        pass
+    return braille
+
+def print_braille(braille_list):  #점자 출력
     for i in range(1, 6, 2):
         for j in range(len(braille_list)):
             if len(braille_list[j]) == 2:
                 for k in range(2):
-                    braille = ['O' for _ in range(2)]
+                    braille = ['●' for _ in range(2)]
                     for m in range(i - 1, i + 1):
                         if not braille_list[j][k][m]:
-                            braille[m % 2] = 'X'
+                            braille[m % 2] = ' '
                     for m in braille:
                         print(m, end=' ')
                     print(end='  ')
             else:
-                braille = ['O' for _ in range(2)]
+                braille = ['●' for _ in range(2)]
                 for k in range(i - 1, i + 1):
                     if not braille_list[j][k]:
-                        braille[k % 2] = 'X'
+                        braille[k % 2] = ' '
                 for k in braille:
                     print(k, end=' ')
                 print(end='  ')
         print()
 
-
 def main():
     braille_list = []
     index1 = 0
-    jamo=seperate_n(input("텍스트 입력 : "))
-    print(jamo)
+    n=input("입력: ")
+    numb = seperate_n(n)
+    print(numb)
 
-    #숫자-한글 이어서 나올때 붙여쓰기 ex)1권
+    for index1 in range(len(numb)):
+        braille_list.append(NumtoBraille(numb, index1))
+        # braille_list.append(PunctoBraille(numb, index1))
+        # braille_list.append(CalctoBraille(numb,index1))
+        if numb[index1][0] == 'ㄴ' or 'ㄷ' or 'ㅁ' or 'ㅋ' or 'ㅌ' or 'ㅍ' or 'ㅎ':
+            braille_list.append([0, 0, 0, 0, 0, 0])
+            index1 += 1
 
+
+    print(braille_list)
     print_braille(braille_list)
 
+    #숫자는 수표를 앞세워
+    #첫글자 앞에만 수표 나옴
+
+    #숫자 다음에 한글-> 숫자 한글 붙여쓴다 + 여러 조건
+    #숫자와 혼동되는 ㄴㄷㅁㅁㅋㅌㅍㅎ 의 첫 소리 글자와 '운'의 약자가 숫자 다음에 이어나올 때에는 숫자와 한글을 띄어쓴다
 if __name__ == '__main__':
     main()
