@@ -6,9 +6,12 @@
 
 import keyboard
 import time
+import playsound
 
 
 def main():
+    #다이얼 번호 파일 경로 설정
+    m1 = ('C:/Users/강두인/Downloads/1번.mp3')
     """""
     print("저장공간을 지정하세요")
 
@@ -104,11 +107,13 @@ def main():
             print("현재 다이얼 넘버 = ", end='')
             print(dial_index)
             time.sleep(0.5)
+            sound_dial()
         elif key == '5':
             dial_index += 1
             print("현재 다이얼 넘버 = ", end='')
             print(dial_index)
             time.sleep(0.5)
+            sound_dial()
         elif key == '6':
             dial_index -= 10
             if dial_index < 0:
@@ -218,9 +223,12 @@ def main():
             print('')
             time.sleep(0.5)
 
+        def sound_dial():
+            if dial_index == 1:
+                playsound.playsound(m1)
 
-"""""
-        # 분류하여 저장 기능55544455545555544445554555562211020222220220r22222255r2r555564222020r
+        """
+        # 분류하여 저장 기능
 
 
 
@@ -251,7 +259,7 @@ def main():
         information_list[dial_index]=saved_list
 
 
-        #어떻게 다시 꺼내쓸거냐
+        #어떻게 다시 꺼내쓸거냐65
         printI(information_list(dial_index))
 """
 
