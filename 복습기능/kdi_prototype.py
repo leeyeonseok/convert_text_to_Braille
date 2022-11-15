@@ -63,14 +63,14 @@ def main():
         print('복습기능을 시작합니다.')
         print('###########################')
         print('지정된 키는')
-        print('[0] = 저장 시작 / 한번 더 클릭 : 저장 완료')
-        print('[1] = 이전 문자')
-        print('[2] = 다음 문자')
+        print('[0] = 저장 시작 / 한번 더 클릭 : 저장 완료') 2 #저장시작 저장완료 다른 스위치(2개)
+        print('[1] = 이전 문자')1
+        print('[2] = 다음 문자')1
         print('[3] = 임시 저장 내용 출력')
-        print('[4] = 큰 다이얼 +')
-        print('[5] = 작은 다이얼 +')
-        print('[6] = 큰 다이얼 -')
-        print('[7] = 작은 다이얼 -')
+        print('[4] = 큰 다이얼 +')1
+        print('[5] = 작은 다이얼 +')1
+        print('[6] = 큰 다이얼 -')1
+        print('[7] = 작은 다이얼 -')1
         print('[r] = 현재 다이얼 저장 내용 출력')
         print('###########################')
         print('')
@@ -163,7 +163,7 @@ def main():
                         if now_index < init_index:
                                 now_index += length_index
                                 print('----------------------')
-                                print('문장 마지막으로 돌아갑니다')
+                                print(' 문장 마지막으로 돌아갑니다')
                                 print('----------------------')
                         elif now_index > last_index:
                                 now_index -= length_index
