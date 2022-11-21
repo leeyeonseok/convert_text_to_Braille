@@ -1,10 +1,4 @@
 
-#
-#      공대선배 라즈베리파이썬 #7 스위치 입력
-#      youtube 바로가기: https://www.youtube.com/c/공대선배
-#      버튼을 누르는 동안만 LED의 불을 켜는 코드
-#
-
 import RPi.GPIO as GPIO     # 라즈베리파이 GPIO 관련 모듈을 불러옴
 
 GPIO.setmode(GPIO.BCM)      # GPIO 핀들의 번호를 지정하는 규칙 설정
