@@ -122,16 +122,19 @@ def main():
         # cv2.line(roi_img, bottomRight, bottomLeft, (0, 255, 0), 2)
         # cv2.line(roi_img, bottomLeft, topLeft, (0, 255, 0), 2)
         # roi_img = put_text(roi_img, text, topLeft[0], topLeft[1] - 10, font_size=30)
-        text=text.strip()
-        text=text.replace(" ","")
-        SingleText=list(text)
-        for i in SingleText:
-            SingleText_list.append(list(i))
-        print(SingleText_list)
+
+        ####복습기능 전용 추가 코드 #####
+        # text=text.strip()
+        # text=text.replace(" ","")
+        # SingleText=list(text)
+        # for i in SingleText:
+        #     SingleText_list.append(list(i))
+        # print(SingleText_list)
 
     print(text_list)
 
-    return text_list,SingleText_list
+    return text_list\
+        #,SingleText_list
 
     #plt_imshow(["Original", "ROI"], [img, roi_img], figsize=(16, 10))
 

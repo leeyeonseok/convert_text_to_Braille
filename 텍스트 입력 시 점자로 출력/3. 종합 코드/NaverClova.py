@@ -74,7 +74,7 @@ def main():
     secret_key = 'REV3WW9CenVYWUxMWlZYQ0lCa25DQnRPclJxSXF0V3o='
 
     # 이미지는 바이너리로 변환하여  load 합니다.
-    path = 'C:/users/leeys/OneDrive/바탕 화면/test_image_1.jpg'
+    path = 'C:/users/kimjh/ocr_testPict/ocr_test9.jpg'
     files = [('file', open(path, 'rb'))]
 
     # REST API 호출 후 응답을 기다립니다.
@@ -94,7 +94,7 @@ def main():
 
     # Check Result
     img = cv2.imread(path)
-    # roi_img = img.copy()
+    roi_img = img.copy()
     # 클로바 설명 링크 가보면 응답 JSON 을 볼 수 있당. 그 응답 중에서 image 아래, 리스트 중 첫번째 객체 딕셔너리 fields가 있음. 그 중 키워드 inferText에 변환 스트링이 담김.
     # 그 아래 것들은 변환 결과 사진 띄어 주는 코드.
     text_list = []
@@ -102,21 +102,22 @@ def main():
         text = field['inferText']
         text_list.append(text)
 
-        # vertices_list = field['boundingPoly']['vertices']
-        # pts = [tuple(vertice.values()) for vertice in vertices_list]
-        # topLeft = [int(_) for _ in pts[0]]
-        # topRight = [int(_) for _ in pts[1]]
-        # bottomRight = [int(_) for _ in pts[2]]
-        # bottomLeft = [int(_) for _ in pts[3]]
+        vertices_list = field['boundingPoly']['vertices']
+        pts = [tuple(vertice.values()) for vertice in vertices_list]
+        topLeft = [int(_) for _ in pts[0]]
+        topRight = [int(_) for _ in pts[1]]
+        bottomRight = [int(_) for _ in pts[2]]
+        bottomLeft = [int(_) for _ in pts[3]]
 
-        # cv2.line(roi_img, topLeft, topRight, (0, 255, 0), 2)
-        # cv2.line(roi_img, topRight, bottomRight, (0, 255, 0), 2)
-        # cv2.line(roi_img, bottomRight, bottomLeft, (0, 255, 0), 2)
-        # cv2.line(roi_img, bottomLeft, topLeft, (0, 255, 0), 2)
-        # roi_img = put_text(roi_img, text, topLeft[0], topLeft[1] - 10, font_size=30)
+        cv2.line(roi_img, topLeft, topRight, (0, 255, 0), 2)
+        cv2.line(roi_img, topRight, bottomRight, (0, 255, 0), 2)
+        cv2.line(roi_img, bottomRight, bottomLeft, (0, 255, 0), 2)
+        cv2.line(roi_img, bottomLeft, topLeft, (0, 255, 0), 2)
+        roi_img = put_text(roi_img, text, topLeft[0], topLeft[1] - 10, font_size=30)
 
+    print(text_list)
     return text_list
-    # plt_imshow(["Original", "ROI"], [img, roi_img], figsize=(16, 10))
+    plt_imshow(["Original", "ROI"], [img, roi_img], figsize=(16, 10))
 
 
 if __name__ == '__main__':

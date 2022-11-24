@@ -402,16 +402,16 @@ def print_braille(braille_list):
 
 def main():
 
-    text_list=NaverClova.main()
-
-    text_list=text_list[3:9]
+    #text_list=NaverClova.main()
+    TB_b_list = []
+    text_list=['라즈베리파이']
     for text in text_list:
         braille_list = []
         index1 = 0
         jamo = separation_text(text)
-        print(jamo)
+        #print(jamo)
         while index1 < len(jamo):
-                    if jamo[index1] == [' ']:                                                  # 띄어쓰기 구현
+                    if jamo[index1] == [' ']:                                                      # 띄어쓰기 구현
                         word_spacing = [0, 0, 0, 0, 0, 0]
                         braille_list.append(word_spacing)
                         index1 += 1
@@ -499,8 +499,14 @@ def main():
 
                     index1 += 1
         print(braille_list)
-        print_braille(braille_list)
+        TB_b_list.append(braille_list)
+        print(TB_b_list)
 
+    print(TB_b_list)
+
+        #print_braille(braille_list)
+
+    #return braille_list
 
 
 
